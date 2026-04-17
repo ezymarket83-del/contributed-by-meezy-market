@@ -2,68 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EZY Market</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EZY Market Core System</title>
   <style>
-    body{
-      font-family: Arial;
-      margin:0;
-      background:#f5f7fb;
+    :root{
+      --bg:#f7faff;--surface:#ffffff;--surface-soft:#fbfdff;--text:#0f172a;--muted:#64748b;--line:#dbe7f5;
+      --primary:#2563eb;--primary-dark:#1d4ed8;--primary-soft:#eff6ff;--success:#15803d;--warning:#b45309;--danger:#b91c1c;
+      --shadow:0 14px 36px rgba(37,99,235,.08);--radius:22px;--max:1280px;
     }
-
-    header{
-      background:#2563eb;
-      color:#fff;
-      padding:15px;
-      text-align:center;
-      font-size:24px;
-      font-weight:bold;
-    }
-
-    .container{
-      padding:20px;
-    }
-
-    .card{
-      background:#fff;
-      padding:15px;
-      margin-bottom:15px;
-      border-radius:10px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.05);
-    }
-
-    button{
-      background:#2563eb;
-      color:#fff;
-      border:none;
-      padding:10px 15px;
-      border-radius:8px;
-      cursor:pointer;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>EZY Market</header>
-
-<div class="container">
-  <div class="card">
-    <h2>Welcome</h2>
-    <p>Site is working ✅</p>
-  </div>
-
-  <div class="card">
-    <h2>Products</h2>
-    <p>Products will appear here</p>
-  </div>
-
-  <div class="card">
-    <h2>Basket</h2>
-    <button>Add Test Item</button>
-  </div>
-</div>
-
-</body>
-</html>
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f8fbff 0%,#f4f8fd 100%);color:var(--text)}
+    button,input,textarea,select{font:inherit} button{cursor:pointer} img{display:block;max-width:100%} a{text-decoration:none;color:inherit}
+    .hidden{display:none!important}.shell{max-width:var(--max);margin:0 auto;padding:0 16px 48px}
+    .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(248,251,255,.88);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:160px minmax(0,1fr) 160px;align-items:center;gap:12px;padding:14px 16px}
+    .top-left,.top-right{display:flex;align-items:center;gap:10px}.top-right{justify-content:flex-end}
+    .icon-btn,.chip-btn,.menu-btn,.small-btn,.ghost-btn,.primary-btn,.danger-btn{min-height:42px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:0 16px;transition:transform .15s ease, background .15s ease, box-shadow .15s ease, color .15s ease;box-shadow:0 2px 8px rgba(15,23,42,.02)}
+    .icon-btn:hover,.chip-btn:hover,.menu-btn:hover,.small-btn:hover,.ghost-btn:hover,.primary-btn:hover,.danger-btn:hover{transform:translateY(-1px)}
+    .icon-btn{width:42px;min-width:42px;padding:0;display:grid;place-items:center;font-size:18px}
+    .small-btn{min-height:36px;padding:0 12px;font-size:14px}.ghost-btn{background:var(--primary-soft);color:var(--primary);border-color:#cfe0ff}
+    .primary-btn{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 12px 28px rgba(37,99,235,.18)}
+    .danger-btn{background:#fff5f5;color:var(--danger);border-color:#fecaca}
+    .menu-btn.active{background:var(--primary-soft);color:var(--primary);border-color:#cfe0ff}
+    .brand-wrap{display:flex;justify-content:center;align-items:center;min-width:0}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0;max-width:100%;padding:10px 18px;background:var(--surface);border:1px solid var(--line);border-radius:999px;box-shadow:var(--shadow);cursor:pointer;user-select:none}
+    .brand-mark{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),#60a5fa);color:#fff;font-weight:900;overflow:hidden;flex:0 0 auto}
+    .brand-mark img{width:100%;height:100%;object-fit:cover}
+    .brand-text{font-size:26px;font-weight:900;letter-spacing:-.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .mobile-menu{display:none;margin:10px 0 0;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);gap:10px;flex-wrap:wrap}
+    .mobile-menu.show{display:flex}
+    .header-nav{max-width:var(--max);margin:0 auto;padding:0 16px 10px;display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}
+    .header-nav::-webkit-scrollbar{display:none}
+    .header-nav-link{position:relative;display:inline-flex;align-items:center;white-space:nowrap;padding:8px 2px;color:var(--muted);font-weight:800;border:none;background:none;box-shadow:none;border-radius:0}
+    .header-nav-link.active{color:var(--primary)}
+    .header-nav-link.active::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--primary);border-radius:999px}
+    .home-products-block{margin-top:30px}
+    .home-products-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px}
+    .home-products-head h2{margin:0;font-size:22px;font-weight:900;letter-spacing:-.04em}
+    .home-products-head .row-sub{margin:0}
+    .feature-strip{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:16px;color:var(--muted);font-weight:700}
+    .feature-strip span{display:inline-flex;align-items:center;gap:8px}
+    .feature-strip span::before{content:'•';color:var(--primary);font-size:18px;line-height:1}
+    .section{display:none}.section.active{display:block}
+    .hero{padding:32px 0 16px;display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
+    .hero
