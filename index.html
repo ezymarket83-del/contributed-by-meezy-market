@@ -1952,7 +1952,15 @@ checkoutPayBtn.addEventListener('click', async () => {
       })
     });
 
-    const data = await res.json();
+    let data;
+
+try {
+  data = await res.json();
+} catch (e) {
+  console.log("JSON error:", e);
+  basketMessage.textContent = "Server error";
+  return;
+}
 
     if (!res.ok || !data.id) {
       console.log(data);
