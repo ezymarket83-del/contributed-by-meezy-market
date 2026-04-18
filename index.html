@@ -1952,7 +1952,7 @@ checkoutPayBtn.addEventListener('click', async () => {
       return;
     }
 
-    const stripe = Stripe("%%STRIPE_PUBLISHABLE_KEY%%");
+    const stripe = Stripe("pk_live_51TMTMkLo1ThQ9mnvayyMdotkNPHEkEzEPOSLZTYxTqHhh5dbPYYdeinMXeiCFLm1PFuYMwtJGnB3SJGMeL1GWkG600bFeHZAea");
 
     await stripe.redirectToCheckout({
       sessionId: data.id
