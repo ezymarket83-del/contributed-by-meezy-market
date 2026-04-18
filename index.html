@@ -1930,7 +1930,39 @@ function bindUi(){
   if(productCategoryFilter) productCategoryFilter.addEventListener('change', ()=>{productsPageState.page=1; renderProducts(); renderProductsHome(); renderCategories();});
   if(clearProductFiltersBtn) clearProductFiltersBtn.addEventListener('click', ()=>{productSearch.value=''; if(productCategoryFilter) productCategoryFilter.value=''; productsPageState.page=1; renderProducts(); renderProductsHome(); renderCategories();});
   placeOrderBtn.addEventListener('click', ()=>placeOrder('place'));
-  checkoutPayBtn.addEventListener('click', ()=>{basketMessage.textContent='Payment system not connected yet.';});
+checkoutPayBtn.addEventListener('click', async () => {
+
+  try {
+    const res = await fetch("/.netlify/functions/create-checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        amount: 1000
+      })
+    });
+
+    const data = await res.json();
+
+    if (!data.id) {
+      basketMessage.textContent = 'Stripe error';
+      console.log(data);
+      return;
+    }
+
+    const stripe = Stripe("%%STRIPE_PUBLISHABLE_KEY%%");
+
+    await stripe.redirectToCheckout({
+      sessionId: data.id
+    });
+
+  } catch (err) {
+    console.error(err);
+    basketMessage.textContent = 'Checkout failed';
+  }
+
+});
   printOrderBtn.addEventListener('click', printBasket);
   emailOrderBtn.addEventListener('click', emailBasket);
 }
