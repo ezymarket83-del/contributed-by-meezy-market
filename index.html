@@ -1932,38 +1932,48 @@ function bindUi(){
   if(clearProductFiltersBtn) clearProductFiltersBtn.addEventListener('click', ()=>{productSearch.value=''; if(productCategoryFilter) productCategoryFilter.value=''; productsPageState.page=1; renderProducts(); renderProductsHome(); renderCategories();});
   placeOrderBtn.addEventListener('click', ()=>placeOrder('place'));
 checkoutPayBtn.addEventListener('click', async () => {
-const total = appState.basket.reduce((s,i)=>s+Number(i.price)*Number(i.qty),0);
+  const total = appState.basket.reduce((s, i) => s + Number(i.price || 0) * Number(i.qty || 0), 0);
+
+  if (!total || total <= 0) {
+    basketMessage.textContent = 'Basket is empty.';
+    return;
+  }
+
   try {
+    basketMessage.textContent = 'Redirecting to secure payment...';
+
     const res = await fetch("/.netlify/functions/create-checkout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-  amount: Math.round(total * 100)
-})
+        amount: Math.round(total * 100)
       })
     });
 
     const data = await res.json();
 
-    if (!data.id) {
-      basketMessage.textContent = 'Stripe error';
+    if (!res.ok || !data.id) {
       console.log(data);
+      basketMessage.textContent = 'Stripe error';
       return;
     }
 
     const stripe = Stripe("pk_live_51TMTMkLo1ThQ9mnvayyMdotkNPHEkEzEPOSLZTYxTqHhh5dbPYYdeinMXeiCFLm1PFuYMwtJGnB3SJGMeL1GWkG600bFeHZAea");
 
-    await stripe.redirectToCheckout({
+    const result = await stripe.redirectToCheckout({
       sessionId: data.id
     });
+
+    if (result.error) {
+      basketMessage.textContent = result.error.message;
+    }
 
   } catch (err) {
     console.error(err);
     basketMessage.textContent = 'Checkout failed';
   }
-
 });
   printOrderBtn.addEventListener('click', printBasket);
   emailOrderBtn.addEventListener('click', emailBasket);
