@@ -2,7 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 exports.handler = async (event) => {
   try {
-    const body = event.body ? JSON.parse(event.body) : {};
+    const body = JSON.parse(event.body || "{}");
     const amount = Number(body.amount || 0);
 
     if (!amount || amount <= 0) {
@@ -13,6 +13,7 @@ exports.handler = async (event) => {
     }
 
     const session = await stripe.checkout.sessions.create({
+      mode: "payment",
       payment_method_types: ["card"],
       line_items: [
         {
@@ -26,7 +27,6 @@ exports.handler = async (event) => {
           quantity: 1
         }
       ],
-      mode: "payment",
       success_url: "https://ezy-market.com.au?success=true",
       cancel_url: "https://ezy-market.com.au?cancel=true"
     });
@@ -38,9 +38,7 @@ exports.handler = async (event) => {
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        error: err.message
-      })
+      body: JSON.stringify({ error: err.message })
     };
   }
 };
