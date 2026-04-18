@@ -1940,7 +1940,8 @@ const total = appState.basket.reduce((s,i)=>s+Number(i.price)*Number(i.qty),0);
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        amount: total
+  amount: Math.round(total * 100)
+})
       })
     });
 
