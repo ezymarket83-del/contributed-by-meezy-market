@@ -1932,7 +1932,7 @@ function bindUi(){
   if(clearProductFiltersBtn) clearProductFiltersBtn.addEventListener('click', ()=>{productSearch.value=''; if(productCategoryFilter) productCategoryFilter.value=''; productsPageState.page=1; renderProducts(); renderProductsHome(); renderCategories();});
   placeOrderBtn.addEventListener('click', ()=>placeOrder('place'));
 checkoutPayBtn.addEventListener('click', async () => {
-
+const total = appState.basket.reduce((s,i)=>s+Number(i.price)*Number(i.qty),0);
   try {
     const res = await fetch("/.netlify/functions/create-checkout", {
       method: "POST",
@@ -1940,7 +1940,7 @@ checkoutPayBtn.addEventListener('click', async () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        amount: 1000
+        amount: total
       })
     });
 
