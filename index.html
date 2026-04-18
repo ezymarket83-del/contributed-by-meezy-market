@@ -1964,7 +1964,7 @@ try {
 
     if (!res.ok || !data.id) {
       console.log(data);
-      basketMessage.textContent = 'Stripe error';
+      basketMessage.textContent = data && data.error ? data.error : 'Stripe error';
       return;
     }
 
