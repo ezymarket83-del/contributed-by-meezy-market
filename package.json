@@ -1,0 +1,7 @@
+{
+  "name": "ezy-market",
+  "version": "1.0.0",
+  "dependencies": {
+    "stripe": "^18.0.0"
+  }
+}
