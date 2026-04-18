@@ -3,7 +3,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 exports.handler = async (event) => {
   try {
     const body = JSON.parse(event.body || "{}");
-    const amount = Number(body.amount || 0);
+    const amount = 5000;
 
     if (!amount || amount <= 0) {
       return {
