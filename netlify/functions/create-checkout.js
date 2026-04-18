@@ -16,7 +16,7 @@ exports.handler = async (event) => {
             product_data: {
               name: "EZY Market Order"
             },
-            unit_amount: body.amount
+            unit_amount: body.amount * 100
           },
           quantity: 1
         }
